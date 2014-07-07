@@ -229,12 +229,18 @@ module ActionView
       # ==== Examples
       #   <%= button_to "New", action: "new" %>
       #   # => "<form method="post" action="/controller/new" class="button_to">
-      #   #      <div><input value="New" type="submit" /></div>
+      #   #      <div>
+      #   #        <input value="New" type="submit" />
+      #   #        <input name="authenticity_token" type="hidden" value="10f2163b45388899ad4d5ae948988266befcb6c3d1b2451cf657a0c293d605a6"/>
+      #   #      </div>
       #   #    </form>"
       #
       #   <%= button_to "New", new_articles_path %>
       #   # => "<form method="post" action="/articles/new" class="button_to">
-      #   #      <div><input value="New" type="submit" /></div>
+      #   #      <div>
+      #   #        <input value="New" type="submit" />
+      #   #        <input name="authenticity_token" type="hidden" value="10f2163b45388899ad4d5ae948988266befcb6c3d1b2451cf657a0c293d605a6"/>
+      #   #      </div>
       #   #    </form>"
       #
       #   <%= button_to [:make_happy, @user] do %>
@@ -245,12 +251,16 @@ module ActionView
       #   #        <button type="submit">
       #   #          Make happy <strong><%= @user.name %></strong>
       #   #        </button>
+      #   #        <input name="authenticity_token" type="hidden" value="10f2163b45388899ad4d5ae948988266befcb6c3d1b2451cf657a0c293d605a6"/>
       #   #      </div>
       #   #    </form>"
       #
       #   <%= button_to "New", { action: "new" }, form_class: "new-thing" %>
       #   # => "<form method="post" action="/controller/new" class="new-thing">
-      #   #      <div><input value="New" type="submit" /></div>
+      #   #      <div>
+      #   #        <input value="New" type="submit" />
+      #   #        <input name="authenticity_token" type="hidden" value="10f2163b45388899ad4d5ae948988266befcb6c3d1b2451cf657a0c293d605a6"/>
+      #   #      </div>
       #   #    </form>"
       #
       #
