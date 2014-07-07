@@ -215,6 +215,9 @@ module ActionView
       # * <tt>:form_class</tt> - This controls the class of the form within which the submit button will
       #   be placed
       # * <tt>:params</tt> - Hash of parameters to be rendered as hidden fields within the form.
+      # * <tt>:authenticity_token</tt> - Authenticity token to use in the form. Use only if you need to
+      #   pass custom authenticity token string, or to not add authenticity_token field at all
+      #   (by passing <tt>false</tt>).
       #
       # ==== Data attributes
       #
@@ -263,6 +266,20 @@ module ActionView
       #   #      </div>
       #   #    </form>"
       #
+      #   <%= button_to "New", { action: "new" }, form_class: "new-thing", authenticity_token: false %>
+      #   # => "<form method="post" action="/controller/new" class="new-thing">
+      #   #      <div>
+      #   #        <input value="New" type="submit" />
+      #   #      </div>
+      #   #    </form>"
+      #
+      #   <%= button_to "New", { action: "new" }, form_class: "new-thing", authenticity_token: 'cf50faa3fe97702ca1ae' %>
+      #   # => "<form method="post" action="/controller/new" class="new-thing">
+      #   #      <div>
+      #   #        <input value="New" type="submit" />
+      #   #        <input name="authenticity_token" type="hidden" value="cf50faa3fe97702ca1ae"/>
+      #   #      </div>
+      #   #    </form>"
       #
       #   <%= button_to "Create", { action: "create" }, remote: true, form: { "data-type" => "json" } %>
       #   # => "<form method="post" action="/images/create" class="button_to" data-remote="true" data-type="json">
@@ -315,7 +332,8 @@ module ActionView
         form_options.merge!(method: form_method, action: url)
         form_options.merge!("data-remote" => "true") if remote
 
-        request_token_tag = form_method == 'post' ? token_tag : ''
+        authenticity_token = html_options.delete("authenticity_token")
+        request_token_tag = form_method == 'post' ? token_tag(authenticity_token) : ''
 
         html_options = convert_options_to_data_attributes(options, html_options)
         html_options['type'] = 'submit'
